@@ -2,15 +2,15 @@ create database if not exists project_spring_2;
 
 use project_spring_2;
 
-create table if not exists computer_type(
+create table if not exists laptop_type(
+	id int primary key auto_increment,
+	name varchar(250)
+    );
+
+
+create table if not exists customer_type(
 	id int primary key auto_increment,
 	name varchar(250),
-	is_delete bit default 0
-);
-
-create table if not exists `status`(
-	id int primary key auto_increment,
-	name varchar(50),
 	is_delete bit default 0
 );
 
@@ -78,39 +78,36 @@ create table if not exists employee(
 	foreign key (username) references user(username)
 );
 
-create table if not exists computer(
+create table if not exists laptop(
 id int primary key auto_increment,
 is_delete bit default 0,
-name varchar(50),
-`cpu` varchar(30),
-hard_drive varchar(30),
-screen varchar(30),
+name varchar(100),
+`cpu` varchar(100),
+screen varchar(100),
 graphics_card varchar(100),
-design varchar(30),
 image varchar(500),
-ram int,
-amount int,
+ram varchar(100),
+quantity int,
 price int,
-release_time int,
-computer_type_id int,
-epmloyee_id int,
-status_id int,
-foreign key(computer_type_id) references computer_type(id),
-foreign key(epmloyee_id) references employee(id),
-foreign key(status_id) references status(id)
+laptop_type_id int,
+employee_id int,
+status int,
+promotion_id int,
+foreign key(laptop_type_id) references laptop_type(id),
+foreign key(employee_id) references employee(id),
+foreign key(promotion_id) references promotion(id)
+
 );
 
 
-create table if not exists booking_computer(
+create table if not exists booking_laptop(
 id int primary key auto_increment,
 is_delete bit default 0,
 status bit default 0,
-computer_id int,
+laptop_id int,
 customer_id int,
-promotion_id int,
-foreign key(computer_id) references computer(id),
-foreign key(customer_id) references customer(id),
-foreign key(promotion_id) references promotion(id)
+foreign key(laptop_id) references laptop(id),
+foreign key(customer_id) references customer(id)
 );
 
 
