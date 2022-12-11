@@ -4,6 +4,7 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {ILaptopDto} from '../dto/ilaptop-dto';
 import {LaptopType} from '../model/laptop-type';
+import {DataResult} from '../dto/data-result';
 
 @Injectable({
   providedIn: 'root'
@@ -15,12 +16,17 @@ export class LaptopService {
   constructor(private http: HttpClient) {
   }
 
-  getAllLaptop(page: number, nameSearch: string): Observable<ILaptopDto[]> {
-    return this.http.get<ILaptopDto[]>(this.API_LAPTOP + 'laptop/list?page=' + page + '&nameSearch=' + nameSearch);
+  getAllLaptop(page: number, nameSearch: string): Observable<DataResult<ILaptopDto>> {
+    console.log(this.API_LAPTOP + 'laptop/list?page=' + page + '&nameSearch=' + nameSearch);
+    return this.http.get<DataResult<ILaptopDto>>(this.API_LAPTOP + 'laptop/list?page=' + page + '&nameSearch=' + nameSearch);
   }
 
   getAllLaptopType(): Observable<LaptopType[]> {
     return this.http.get<ILaptopDto[]>(this.API_LAPTOP + 'laptop/type-list');
+  }
+
+  findById(id: number): Observable<ILaptopDto> {
+    return this.http.get<ILaptopDto>(this.API_LAPTOP + 'laptop/find-by-id/' + id);
   }
 
 }

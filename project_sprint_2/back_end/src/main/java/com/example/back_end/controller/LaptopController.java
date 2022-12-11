@@ -1,10 +1,9 @@
 package com.example.back_end.controller;
 
-import com.example.back_end.dto.ILaptopDto;
+import com.example.back_end.dto.laptop.ILaptopDto;
 import com.example.back_end.model.laptop.LaptopType;
-import com.example.back_end.repository.laptop.ILaptopRepository;
-import com.example.back_end.repository.laptop.ILaptopTypeRepository;
 import com.example.back_end.service.laptop.ILaptopService;
+import com.example.back_end.service.laptop.ILaptopTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin("*")
@@ -23,7 +23,7 @@ public class LaptopController {
     private ILaptopService laptopService;
 
     @Autowired
-    private ILaptopTypeRepository laptopTypeRepository;
+    private ILaptopTypeService laptopTypeService;
 
     @GetMapping("/list")
     public ResponseEntity<Page<ILaptopDto>> findAllLaptopAndSearch(
@@ -38,10 +38,20 @@ public class LaptopController {
 
     @GetMapping("/type-list")
     public ResponseEntity<List<LaptopType>> findAllLaptopType() {
-        List<LaptopType> laptopTypes = laptopTypeRepository.findAll();
+        List<LaptopType> laptopTypes = laptopTypeService.findAll();
         if (laptopTypes.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(laptopTypes, HttpStatus.OK);
+    }
+
+    @GetMapping("/find-by-id/{id}")
+    public ResponseEntity<?> findByIdLaptop(@PathVariable Integer id) {
+        Optional<ILaptopDto> laptopDtoOptional = laptopService.findByIdLaptop(id);
+        if (laptopDtoOptional.isPresent()) {
+            return new ResponseEntity<>(laptopDtoOptional, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
     }
 }

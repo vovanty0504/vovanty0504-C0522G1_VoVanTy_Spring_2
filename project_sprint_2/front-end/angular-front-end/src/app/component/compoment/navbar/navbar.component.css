@@ -64,8 +64,8 @@ a {
 }
 
 .menu a:hover {
-  background: cornflowerblue;
-  color: white;
+  /*text-decoration: underline solid rosybrown 3px;*/
+  color: #acacac;
 }
 
 .dropdown-menu a:hover{

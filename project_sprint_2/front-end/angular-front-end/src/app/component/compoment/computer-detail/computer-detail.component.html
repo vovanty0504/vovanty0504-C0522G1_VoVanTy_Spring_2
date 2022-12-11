@@ -2,25 +2,24 @@
 <div class="row" style="margin-top: 50px">
   <div class="col-lg-1"></div>
   <div class="col-lg-10">
-    <div class="row">
+    <div class="row"  *ngIf="laptop$|async">
       <div class="col-lg-9">
-        <div class="card" style="width: 100%; height: auto">
+        <div class="card" style="width: 100%; height: auto;margin-bottom: 100px">
           <div class="row">
             <div class="col-lg-4">
               <img
-                src="https://lh3.googleusercontent.com/XzGYBhw_-WlifYoDb29PY75d2mjQnp0yBA4A4OtxS7QALPNRG_4wmW2y4U48aAxr1izZ75GJJ-xFKoUSs6w8m0XhPpanRSo=w1000-rw"
+                src="{{laptop$.value.image}}"
                 alt="...">
 
             </div>
 
 
             <div class="col-lg-8">
-              <h4 class="card-text">Laptop ACER Nitro 5 Eagle AN515-57-54MV
-                (i5-11400H/RAM 8GB/512GB SSD/ Windows 11).</h4>
-              <p class="card-text " style="color: blue;height: 10px"><b>17.490.000 đ</b></p>
+              <h4 class="card-text">{{laptop$.value.name}} {{laptop$.value.cpu}} /RAM{{laptop$.value.ram}}</h4>
+              <p class="card-text " style="color: blue;height: 10px"><b>{{laptop$.value.discountMoney|number}} ₫</b></p>
               <p class="card-text "
                  style="color: #aaaaaa;text-decoration-line: line-through;font-size: 13px">
-                20.490.000&nbsp;₫</p>
+                {{laptop$.value.price|number}}&nbsp;₫</p>
               <hr>
               <div class="row">
                 <div class="col-lg-6">
@@ -43,14 +42,13 @@
           </div>
           <div class="row">
             <div class=" font-size-p">
-              <p>- CPU: Intel Core i5-1235U</p>
-              <p>- Màn hình: 15.6" IPS (1366 x 768)</p>
-              <p>- RAM: 2 x 4GB DDR4 3200MHz</p>
-              <p>- Đồ họa: Onboard Intel Iris Xe Graphics</p>
+              <p>- CPU: {{laptop$.value.cpu}}</p>
+              <p>- Màng hình: {{laptop$.value.screen}}</p>
+              <p>- RAM: {{laptop$.value.ram}}</p>
               <p>- Lưu trữ: 512GB SSD M.2 NVMe /</p>
               <p>- Hệ điều hành: Windows 11 Home</p>
               <p>- Pin: 3 cell 41 Wh Pin liền</p>
-              <p>- Khối lượng: 1.7kg</p>
+              <p style="margin-bottom: 50px">- Khối lượng: 1.7kg</p>
             </div>
           </div>
         </div>
@@ -95,12 +93,12 @@
             Vệ sinh máy tính, laptop
           </p>
           <p><span id="boot-icon6" class="bi bi-shield-check" style="font-size: 1rem; color: rgb(0, 0, 255);"></span>
-          Bảo hành tại nhà
+            Bảo hành tại nhà
           </p>
         </div>
       </div>
     </div>
   </div>
-  <div class="col-lg-1"></div>
-</div>
-</body>
+  <div  class="col-lg-1"></div>
+</div >
+</body >

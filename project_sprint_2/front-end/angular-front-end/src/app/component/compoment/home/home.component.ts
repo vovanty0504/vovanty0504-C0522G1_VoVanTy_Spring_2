@@ -12,7 +12,8 @@ export class HomeComponent implements OnInit {
 
   totalRecord = 0;
   action: boolean;
-  numberRecord = 0;
+  totalPage = 0;
+  numberPage = 0;
   nameSearch = '';
   laptopList: ILaptopDto[];
   moreLaptopList: ILaptopDto[];
@@ -22,24 +23,20 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getAllLaptopList(this.numberRecord);
+    this.getAllLaptopList(this.numberPage);
   }
 
   getAllLaptopList(numberP: number) {
     this.laptopService.getAllLaptop(numberP, this.nameSearch).subscribe(value => {
-      console.log(value);
-      // @ts-ignore
-      this.totalRecord = Math.ceil(value.totalElements / 8);
-      console.log(this.totalRecord);
       if (value != null) {
         this.action = true;
-        if (this.numberRecord === 0) {
-          // @ts-ignore
-          this.laptopList = value.content;
+        this.totalRecord = value.totalElements;
+        this.totalPage = value.totalPages;
+        if (numberP > 0) {
+          this.moreLaptopList = this.laptopList;
+          this.laptopList = this.moreLaptopList.concat(value.content);
         } else {
-          // @ts-ignore
-          this.moreLaptopList = value.content;
-          this.laptopList = this.laptopList.concat(this.moreLaptopList);
+          this.laptopList = value.content;
         }
       } else {
         this.action = false;
@@ -48,9 +45,14 @@ export class HomeComponent implements OnInit {
   }
 
   loadMore() {
-    this.numberRecord += 1;
-    this.getAllLaptopList(this.numberRecord);
+    this.numberPage += 1;
+    this.getAllLaptopList(this.numberPage);
   }
 
 
+  search() {
+    console.log(this.nameSearch);
+    this.numberPage = 0;
+    this.getAllLaptopList(this.numberPage);
+  }
 }

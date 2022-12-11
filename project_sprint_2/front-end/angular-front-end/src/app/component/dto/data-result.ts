@@ -1,8 +1,9 @@
 export interface DataResult<T> {
-  content: [];
-  pagination: {
+  content: T[];
+  pageable: {
     pageNumber: number,
-    size: number
+    pageSize: number
   };
+  totalPages: number;
   totalElements: number;
 }

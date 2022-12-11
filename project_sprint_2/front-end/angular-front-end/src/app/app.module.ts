@@ -10,6 +10,7 @@ import {FooterComponent} from './component/compoment/footer/footer.component';
 import {ComputerDetailComponent} from './component/compoment/computer-detail/computer-detail.component';
 import {CartComponent} from './component/compoment/cart/cart.component';
 import {HttpClientModule} from '@angular/common/http';
+import {FormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import {HttpClientModule} from '@angular/common/http';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
