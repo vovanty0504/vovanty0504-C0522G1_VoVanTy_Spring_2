@@ -28,8 +28,17 @@ public class LaptopController {
     @GetMapping("/list")
     public ResponseEntity<Page<ILaptopDto>> findAllLaptopAndSearch(
             @PageableDefault(value = 8) Pageable pageable,
-            @RequestParam(value = "nameSearch", defaultValue = "", required = false) String nameSearch) {
-        Page<ILaptopDto> laptopDtoPage = laptopService.findAllLaptopAndSearch(pageable, nameSearch);
+            @RequestParam(value = "nameSearch", defaultValue = "", required = false) String nameSearch,
+            @RequestParam(value = "startPrice", defaultValue = "0", required = false) int startPrice,
+            @RequestParam(value = "endPrice", defaultValue = "0", required = false) int endPrice) {
+        Page<ILaptopDto> laptopDtoPage;
+
+        if (endPrice == 0) {
+            laptopDtoPage = laptopService.findAllLaptopAndSearch(pageable, nameSearch);
+        } else {
+            laptopDtoPage = laptopService.findAllLaptopAndSearchPrice(pageable, nameSearch, startPrice, endPrice);
+        }
+
         if (laptopDtoPage.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }

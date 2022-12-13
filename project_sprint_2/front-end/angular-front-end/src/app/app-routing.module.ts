@@ -1,12 +1,16 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
-import {HomeComponent} from './component/compoment/home/home.component';
-import {ComputerDetailComponent} from './component/compoment/computer-detail/computer-detail.component';
+import {HomeModule} from './component/compoment/home/home.module';
+import {DecentralizationModule} from './component/compoment/decentralization/decentralization.module';
 
 
 const routes: Routes = [
-  {path: '', component: HomeComponent},
-  {path: 'detail/:id', component: ComputerDetailComponent}
+  {
+    path: '', loadChildren: () => HomeModule,
+  },
+  {
+    path: 'login', loadChildren: () => DecentralizationModule
+  }
 ];
 
 @NgModule({

@@ -16,8 +16,13 @@ public class LaptopService implements ILaptopService {
     private ILaptopRepository iLaptopRepository;
 
     @Override
+    public Page<ILaptopDto> findAllLaptopAndSearchPrice(Pageable pageable, String nameSearch,int startPrice, int endPrice) {
+        return iLaptopRepository.findAllLaptopAndSearchPrice(pageable, nameSearch,startPrice,endPrice);
+    }
+
+    @Override
     public Page<ILaptopDto> findAllLaptopAndSearch(Pageable pageable, String nameSearch) {
-        return iLaptopRepository.findAllLaptopAndSearch(pageable, nameSearch);
+        return iLaptopRepository.findAllLaptopAndSearch(pageable,nameSearch);
     }
 
     @Override
