@@ -21,6 +21,7 @@ export class HomeComponent implements OnInit {
   laptopList: ILaptopDto[];
   moreLaptopList: ILaptopDto[];
   laptopTypeList: ILaptopType[];
+  username = '';
 
   constructor(private laptopService: LaptopService) {
   }
@@ -28,6 +29,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAllLaptopList(this.numberPage);
+    // this.findByUsername();
   }
 
   getAllLaptopList(numberP: number) {
@@ -53,22 +55,14 @@ export class HomeComponent implements OnInit {
     this.getAllLaptopList(this.numberPage);
   }
 
+  findByUsername() {
+    this.laptopService.findByUsername().subscribe(value => {
+      this.username = value.username;
+    });
+  }
+
 
   search() {
-    if (Number(this.price) === 1) {
-      this.endPrice = 4999999;
-    } else if (Number(this.price) === 2) {
-      this.endPrice = 9999999;
-    } else if (Number(this.price) === 3) {
-      this.endPrice = 14999999;
-    } else if (Number(this.price) === 4) {
-      this.endPrice = 19999999;
-      console.log(this.endPrice);
-    } else if (Number(this.price) === 5) {
-      this.endPrice = 29999999;
-    } else {
-      this.endPrice = 0;
-    }
     this.numberPage = 0;
     this.getAllLaptopList(this.numberPage);
   }

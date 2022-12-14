@@ -35,24 +35,24 @@
   <div class="col-lg-10">
     <div class="row text-center "><h1>Laptop</h1>
     </div>
-    <div class="row" style="margin-left: 50px">
+    <div class="row" style="margin-left: 10px">
       <div class="col-lg-3"></div>
       <div class="col-lg-4"></div>
       <div class="col-lg-2 d-flex">
-        <select style="border-radius: 7px;width: 200px" [(ngModel)]="price">
-          <option value="">Mức giá</option>
-          <option [value]="1">Dưới 5 triệu</option>
-          <option [value]="2">Dưới 10 triệu</option>
-          <option [value]="3">Dưới 15 triệu</option>
-          <option [value]="4">Dưới 20 triệu</option>
-          <option [value]="5">Dưới 30 triệu</option>
+        <select style="border-radius: 7px;width: 200px" [(ngModel)]="endPrice">
+          <option value="0">Mức giá</option>
+          <option [value]="4999999" >Dưới 5 triệu</option>
+          <option [value]="9999999">Dưới 10 triệu</option>
+          <option [value]="14999999">Dưới 15 triệu</option>
+          <option [value]="19999999">Dưới 20 triệu</option>
+          <option [value]="29999999">Dưới 30 triệu</option>
         </select>
       </div>
       <div class="col-lg-3 d-flex">
         <input class="form-control me-2" type="search" [(ngModel)]="nameSearch" placeholder="Nhập từ khóa tìm"
                aria-label="Search"
                style="border-radius:7px;width: 200px">
-        <button class="btn bg-primary" type="submit" style="width: 40px;border-radius:7px" (click)="search()">
+        <button class="btn bg-primary" type="submit" style="width: 50px;border-radius:7px" (click)="search()">
           <span id="boot-icon" class="bi bi-search" style="font-size: 20px; color: white;"></span>
         </button>
       </div>

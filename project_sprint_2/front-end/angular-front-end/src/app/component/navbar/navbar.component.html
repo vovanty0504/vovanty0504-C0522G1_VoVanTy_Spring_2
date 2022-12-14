@@ -10,7 +10,7 @@
   </div>
   <div class="row " style="background: darkblue">
     <div class="col-lg-2"></div>
-    <div class="col-lg-8">
+    <div class="col-lg-7">
       <div class="menu ulli">
         <ul id="ul">
           <li>
@@ -28,81 +28,114 @@
           <li>
             <a href="#"><span class="bi bi-cart"></span> Giỏ hàng </a>
           </li>
+
         </ul>
       </div>
     </div>
-    <div class="col-lg-2">
-      <div class="menu ulli">
-        <ul>
-          <li>
-            <a routerLink="/login"><span class="bi bi-person-circle"></span> Đăng nhâp / Đăng ký </a>
-          </li>
-        </ul>
+    <div class="col-lg-3">
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="menu ulli">
+            <ul>
+              <li>
+                <p  *ngIf="username != ''">Tài khoản:</p>
+              </li>
+              <li>
+                <a  *ngIf="username != ''" href="#"> {{username}}</a>
+              </li>
+            </ul>
+
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="menu ulli">
+            <ul>
+              <li><a *ngIf="username == ''" routerLink="/login"><span class="bi bi-person-circle"></span> Đăng nhâp /
+                Đăng ký </a>
+                <a *ngIf="username != ''" (click)="whenLogout()"><span class="bi bi-person-circle"></span> Đăng xuất
+                </a></li>
+            </ul>
+
+          </div>
+        </div>
       </div>
+      <!--      <div class="menu ulli">-->
+      <!--        <ul>-->
+      <!--          <li *ngIf="username == ''">-->
+      <!--            <a routerLink="/login"><span class="bi bi-person-circle"></span> Đăng nhâp / Đăng ký </a>-->
+      <!--          </li>-->
+      <!--        </ul>-->
+
+      <!--        <ul>-->
+      <!--          <li *ngIf="username != ''">-->
+      <!--            <a (click)="whenLogout()"><span class="bi bi-person-circle"></span> Đăng xuất </a>-->
+      <!--          </li>-->
+      <!--        </ul>-->
+      <!--      </div>-->
     </div>
   </div>
-<!--    <div class="row">-->
-<!--      <div class="col-lg-1 " style="background: floralwhite"></div>-->
-<!--      <div class="col-lg-10" style="background: floralwhite">-->
-<!--        <nav class="navbar navbar-expand-lg navbar-light ">-->
-<!--          <div class="container-fluid p-4">-->
-<!--            <a class="navbar-brand" href="#">Menu</a>-->
-<!--            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"-->
-<!--                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"-->
-<!--                    aria-label="Toggle navigation">-->
-<!--              <span class="navbar-toggler-icon"></span>-->
-<!--            </button>-->
-<!--            <div class="collapse navbar-collapse" id="navbarSupportedContent" >-->
-<!--              <ul class="navbar-nav me-auto mb-2 mb-lg-0" >-->
+  <!--    <div class="row">-->
+  <!--      <div class="col-lg-1 " style="background: floralwhite"></div>-->
+  <!--      <div class="col-lg-10" style="background: floralwhite">-->
+  <!--        <nav class="navbar navbar-expand-lg navbar-light ">-->
+  <!--          <div class="container-fluid p-4">-->
+  <!--            <a class="navbar-brand" href="#">Menu</a>-->
+  <!--            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"-->
+  <!--                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"-->
+  <!--                    aria-label="Toggle navigation">-->
+  <!--              <span class="navbar-toggler-icon"></span>-->
+  <!--            </button>-->
+  <!--            <div class="collapse navbar-collapse" id="navbarSupportedContent" >-->
+  <!--              <ul class="navbar-nav me-auto mb-2 mb-lg-0" >-->
 
-<!--                <li class="nav-item dropdown" >-->
-<!--                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"-->
-<!--                     aria-expanded="false">-->
-<!--                    Sản phẩm-->
-<!--                  </a>-->
+  <!--                <li class="nav-item dropdown" >-->
+  <!--                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"-->
+  <!--                     aria-expanded="false">-->
+  <!--                    Sản phẩm-->
+  <!--                  </a>-->
 
-<!--                  <ul class="dropdown-menu" aria-labelledby="navbarDropdown">-->
-<!--                    <li  *ngFor="let c of laptopTypeList"><a class="dropdown-item" href="#">{{c.name}}</a></li>-->
+  <!--                  <ul class="dropdown-menu" aria-labelledby="navbarDropdown">-->
+  <!--                    <li  *ngFor="let c of laptopTypeList"><a class="dropdown-item" href="#">{{c.name}}</a></li>-->
 
-<!--                  </ul>-->
-<!--                </li>-->
+  <!--                  </ul>-->
+  <!--                </li>-->
 
-<!--                <li class="nav-item dropdown">-->
-<!--                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button"-->
-<!--                     data-bs-toggle="dropdown"-->
-<!--                     aria-expanded="false">-->
-<!--                    Ram-->
-<!--                  </a>-->
-<!--                  <ul class="dropdown-menu" aria-labelledby="navbarDropdown">-->
-<!--                    <li><a class="dropdown-item" href="#">4GB</a></li>-->
-<!--                    <li><a class="dropdown-item" href="#">8GB</a></li>-->
-<!--                    <li><a class="dropdown-item" href="#">12GB</a></li>-->
-<!--                    <li><a class="dropdown-item" href="#">16Gb</a></li>-->
-<!--                  </ul>-->
-<!--                </li>-->
-<!--                <li class="nav-item dropdown">-->
-<!--                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown3" role="button"-->
-<!--                     data-bs-toggle="dropdown"-->
-<!--                     aria-expanded="false">-->
-<!--                    Màn hình-->
-<!--                  </a>-->
-<!--                  <ul class="dropdown-menu" aria-labelledby="navbarDropdown">-->
-<!--                    <li><a class="dropdown-item" href="#">Full HD</a></li>-->
-<!--                    <li><a class="dropdown-item" href="#">HD</a></li>-->
-<!--                    <li><a class="dropdown-item" href="#">4K (Ultra HD)</a></li>-->
-<!--                    <li><a class="dropdown-item" href="#">2K (Quad HD)</a></li>-->
-<!--                  </ul>-->
-<!--                </li>-->
+  <!--                <li class="nav-item dropdown">-->
+  <!--                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button"-->
+  <!--                     data-bs-toggle="dropdown"-->
+  <!--                     aria-expanded="false">-->
+  <!--                    Ram-->
+  <!--                  </a>-->
+  <!--                  <ul class="dropdown-menu" aria-labelledby="navbarDropdown">-->
+  <!--                    <li><a class="dropdown-item" href="#">4GB</a></li>-->
+  <!--                    <li><a class="dropdown-item" href="#">8GB</a></li>-->
+  <!--                    <li><a class="dropdown-item" href="#">12GB</a></li>-->
+  <!--                    <li><a class="dropdown-item" href="#">16Gb</a></li>-->
+  <!--                  </ul>-->
+  <!--                </li>-->
+  <!--                <li class="nav-item dropdown">-->
+  <!--                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown3" role="button"-->
+  <!--                     data-bs-toggle="dropdown"-->
+  <!--                     aria-expanded="false">-->
+  <!--                    Màn hình-->
+  <!--                  </a>-->
+  <!--                  <ul class="dropdown-menu" aria-labelledby="navbarDropdown">-->
+  <!--                    <li><a class="dropdown-item" href="#">Full HD</a></li>-->
+  <!--                    <li><a class="dropdown-item" href="#">HD</a></li>-->
+  <!--                    <li><a class="dropdown-item" href="#">4K (Ultra HD)</a></li>-->
+  <!--                    <li><a class="dropdown-item" href="#">2K (Quad HD)</a></li>-->
+  <!--                  </ul>-->
+  <!--                </li>-->
 
-<!--              </ul>-->
+  <!--              </ul>-->
 
-<!--            </div>-->
-<!--          </div>-->
-<!--        </nav>-->
+  <!--            </div>-->
+  <!--          </div>-->
+  <!--        </nav>-->
 
-<!--      </div>-->
-<!--      <div class="col-lg-1 " style="background: floralwhite"></div>-->
+  <!--      </div>-->
+  <!--      <div class="col-lg-1 " style="background: floralwhite"></div>-->
 
-<!--    </div>-->
+  <!--    </div>-->
 </div>
 </body>

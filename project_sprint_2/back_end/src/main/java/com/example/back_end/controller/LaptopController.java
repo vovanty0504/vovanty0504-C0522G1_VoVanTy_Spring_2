@@ -1,7 +1,10 @@
 package com.example.back_end.controller;
 
 import com.example.back_end.dto.laptop.ILaptopDto;
+import com.example.back_end.jwt.JwtTokenUtil;
+import com.example.back_end.model.decentralization.User;
 import com.example.back_end.model.laptop.LaptopType;
+import com.example.back_end.service.decentralization.IUserService;
 import com.example.back_end.service.laptop.ILaptopService;
 import com.example.back_end.service.laptop.ILaptopTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,14 +29,20 @@ public class LaptopController {
     @Autowired
     private ILaptopTypeService laptopTypeService;
 
+    @Autowired
+    private IUserService userService;
+
+    @Autowired
+    private JwtTokenUtil jwtTokenUtil;
+
     @GetMapping("/list")
     public ResponseEntity<Page<ILaptopDto>> findAllLaptopAndSearch(
             @PageableDefault(value = 8) Pageable pageable,
             @RequestParam(value = "nameSearch", defaultValue = "", required = false) String nameSearch,
             @RequestParam(value = "startPrice", defaultValue = "0", required = false) int startPrice,
             @RequestParam(value = "endPrice", defaultValue = "0", required = false) int endPrice) {
-        Page<ILaptopDto> laptopDtoPage;
 
+        Page<ILaptopDto> laptopDtoPage;
         if (endPrice == 0) {
             laptopDtoPage = laptopService.findAllLaptopAndSearch(pageable, nameSearch);
         } else {
@@ -62,5 +72,18 @@ public class LaptopController {
         }
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
+    }
+
+    @GetMapping("/find-by-username")
+    public ResponseEntity<?> findByUsername(HttpServletRequest request) {
+        String headerAuth = request.getHeader("Authorization");
+        String username = jwtTokenUtil.getUsernameFromJwtToken(headerAuth.substring(7));
+        System.out.println(username);
+        Optional<User> user = userService.findByUsername(username);
+
+        if (user.isPresent()) {
+            return new ResponseEntity<>(user, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

@@ -7,11 +7,19 @@
         <h2 class="title">Đăng Nhập</h2>
         <div class="input-field">
           <i class="fas fa-user"></i>
-          <input type="text" placeholder="Tên Đăng Nhập"/>
+          <span class="text-danger"
+                *ngIf="formGroup.controls.username.hasError('required')
+                  && formGroup.controls.username.dirty">
+            Vui lòng nhập tài khoản !</span>
+          <input formControlName="username" type="text" placeholder="Tên Đăng Nhập"/>
         </div>
         <div class="input-field">
           <i class="fas fa-lock"></i>
-          <input type="password" placeholder="Mật Khẩu"/>
+          <span class="text-danger"
+                *ngIf="formGroup.controls.password.hasError('required')
+                  && formGroup.controls.password.dirty">
+            Vui lòng nhập mật khẩu !</span>
+          <input formControlName="password" type="password" placeholder="Mật Khẩu"/>
         </div>
         <input type="submit" value="Đăng nhập" class="btn solid"/>
         <p class="social-text">Hoặc Đăng nhập bằng các nền tảng xã hội</p>

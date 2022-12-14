@@ -1,6 +1,7 @@
 package com.example.back_end.service.laptop.impl;
 
 import com.example.back_end.dto.laptop.ILaptopDto;
+import com.example.back_end.model.decentralization.User;
 import com.example.back_end.repository.laptop.ILaptopRepository;
 import com.example.back_end.service.laptop.ILaptopService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,17 +17,19 @@ public class LaptopService implements ILaptopService {
     private ILaptopRepository iLaptopRepository;
 
     @Override
-    public Page<ILaptopDto> findAllLaptopAndSearchPrice(Pageable pageable, String nameSearch,int startPrice, int endPrice) {
-        return iLaptopRepository.findAllLaptopAndSearchPrice(pageable, nameSearch,startPrice,endPrice);
+    public Page<ILaptopDto> findAllLaptopAndSearchPrice(Pageable pageable, String nameSearch, int startPrice, int endPrice) {
+        return iLaptopRepository.findAllLaptopAndSearchPrice(pageable, nameSearch, startPrice, endPrice);
     }
 
     @Override
     public Page<ILaptopDto> findAllLaptopAndSearch(Pageable pageable, String nameSearch) {
-        return iLaptopRepository.findAllLaptopAndSearch(pageable,nameSearch);
+        return iLaptopRepository.findAllLaptopAndSearch(pageable, nameSearch);
     }
 
     @Override
     public Optional<ILaptopDto> findByIdLaptop(Integer id) {
         return iLaptopRepository.findByIdLaptop(id);
     }
+
+
 }
