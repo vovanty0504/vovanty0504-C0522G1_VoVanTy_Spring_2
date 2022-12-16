@@ -2,8 +2,11 @@ package com.example.back_end.controller;
 
 import com.example.back_end.dto.laptop.ILaptopDto;
 import com.example.back_end.jwt.JwtTokenUtil;
+import com.example.back_end.model.customer.Customer;
 import com.example.back_end.model.decentralization.User;
+import com.example.back_end.model.laptop.Laptop;
 import com.example.back_end.model.laptop.LaptopType;
+import com.example.back_end.service.customer.ICustomerService;
 import com.example.back_end.service.decentralization.IUserService;
 import com.example.back_end.service.laptop.ILaptopService;
 import com.example.back_end.service.laptop.ILaptopTypeService;
@@ -25,6 +28,9 @@ import java.util.Optional;
 public class LaptopController {
     @Autowired
     private ILaptopService laptopService;
+
+    @Autowired
+    private ICustomerService customerService;
 
     @Autowired
     private ILaptopTypeService laptopTypeService;
@@ -74,12 +80,26 @@ public class LaptopController {
 
     }
 
+    @GetMapping("/get-customer")
+    public ResponseEntity<Customer> getCustomerByUsername(HttpServletRequest request) {
+        String headerAuth = request.getHeader("Authorization");
+        String username = jwtTokenUtil.getUsernameFromJwtToken(headerAuth.substring(7));
+        System.out.println(username);
+        Customer customer = customerService.findCustomerByUsername(username);
+        return new ResponseEntity<>(customer, HttpStatus.OK);
+    }
+
+    @GetMapping("/get-laptop/{id}")
+    public ResponseEntity<Laptop> getLaptop(@PathVariable(value = "id") Integer id) {
+        Laptop laptop = laptopService.findLaptop(id);
+        return new ResponseEntity<>(laptop, HttpStatus.OK);
+    }
+
     @GetMapping("/find-by-username")
     public ResponseEntity<?> findByUsername(HttpServletRequest request) {
         String headerAuth = request.getHeader("Authorization");
         String username = jwtTokenUtil.getUsernameFromJwtToken(headerAuth.substring(7));
-        System.out.println(username);
-        Optional<User> user = userService.findByUsername(username);
+        Optional<User> user = userService.findUserByUsername(username);
 
         if (user.isPresent()) {
             return new ResponseEntity<>(user, HttpStatus.OK);

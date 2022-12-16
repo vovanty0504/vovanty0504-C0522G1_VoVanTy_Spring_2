@@ -45,6 +45,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    window.scroll(0, 0);
     this.returnUrl = this.route.snapshot.queryParams.returnUrl || '';
     this.formGroup = this.formBuild.group({
         username: ['', Validators.required],

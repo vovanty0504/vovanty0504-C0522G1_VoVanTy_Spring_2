@@ -18,4 +18,7 @@ public interface ICustomerRepository extends JpaRepository<Customer, Integer> {
     @Query(value = "select * from customer where email = :email and is_delete = 0 LIMIT 0, 1;", nativeQuery = true)
     Customer findFakeMail(@Param("email") String email);
 
+    @Query(value = "select * from customer where is_delete = 0 and username = :username", nativeQuery = true)
+    Customer findCustomerByUsername(@Param("username") String username);
+
 }

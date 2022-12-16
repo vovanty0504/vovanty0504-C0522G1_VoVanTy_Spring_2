@@ -2,6 +2,7 @@ package com.example.back_end.service.laptop.impl;
 
 import com.example.back_end.dto.laptop.ILaptopDto;
 import com.example.back_end.model.decentralization.User;
+import com.example.back_end.model.laptop.Laptop;
 import com.example.back_end.repository.laptop.ILaptopRepository;
 import com.example.back_end.service.laptop.ILaptopService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,11 @@ public class LaptopService implements ILaptopService {
     @Override
     public Optional<ILaptopDto> findByIdLaptop(Integer id) {
         return iLaptopRepository.findByIdLaptop(id);
+    }
+
+    @Override
+    public Laptop findLaptop(Integer id) {
+        return iLaptopRepository.findLaptop(id);
     }
 
 

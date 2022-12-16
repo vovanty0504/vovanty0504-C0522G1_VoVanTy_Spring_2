@@ -2,6 +2,10 @@ import {Component, OnInit} from '@angular/core';
 import {LaptopService} from '../../../service/laptop.service';
 import {ILaptopDto} from '../../../dto/ilaptop-dto';
 import {ILaptopType} from '../../../model/i-laptop-type';
+import {ICustomer} from '../../../model/i-customer';
+import Swal from 'sweetalert2';
+import {BehaviorSubject} from 'rxjs';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -9,7 +13,9 @@ import {ILaptopType} from '../../../model/i-laptop-type';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-
+  idUser: number;
+  customer: ICustomer[];
+  quantityChoose = 1;
   totalRecord = 0;
   action: boolean;
   totalPage = 0;
@@ -22,14 +28,21 @@ export class HomeComponent implements OnInit {
   moreLaptopList: ILaptopDto[];
   laptopTypeList: ILaptopType[];
   username = '';
+  laptopId: number;
+  id: number;
+  laptop$: BehaviorSubject<ILaptopDto>;
 
-  constructor(private laptopService: LaptopService) {
+
+  constructor(private laptopService: LaptopService,
+              private activatedRoute: ActivatedRoute) {
   }
 
 
   ngOnInit(): void {
     this.getAllLaptopList(this.numberPage);
-    // this.findByUsername();
+    this.getCustomer();
+    window.scroll(0, 0);
+
   }
 
   getAllLaptopList(numberP: number) {
@@ -55,15 +68,50 @@ export class HomeComponent implements OnInit {
     this.getAllLaptopList(this.numberPage);
   }
 
-  findByUsername() {
-    this.laptopService.findByUsername().subscribe(value => {
-      this.username = value.username;
-    });
-  }
+
 
 
   search() {
     this.numberPage = 0;
     this.getAllLaptopList(this.numberPage);
+  }
+
+  getCustomer(): void {
+    this.laptopService.findByUsername().subscribe(value => {
+
+      this.customer = value;
+      if (this.customer != null) {
+        this.idUser = value.id;
+      }
+    });
+  }
+
+
+  addToCart(laptopId: number): void {
+    this.laptopService.addToCart(this.quantityChoose, this.idUser, laptopId).subscribe(() => {
+      const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener('mouseenter', Swal.stopTimer);
+          toast.addEventListener('mouseleave', Swal.resumeTimer);
+        }
+      });
+
+      Toast.fire({
+        icon: 'success',
+        title: 'Thêm vào giỏ hàng thành công!'
+      });
+      window.setTimeout(this.loadPage, 500);
+    }, error => {
+      console.log(error);
+    });
+  }
+
+  loadPage(): void {
+    window.location.replace('/cart');
   }
 }

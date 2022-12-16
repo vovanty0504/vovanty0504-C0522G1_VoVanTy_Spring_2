@@ -20,4 +20,9 @@ public class CustomerService implements ICustomerService {
     public int saveCreateGmail(Customer customer) {
         return customerRepository.saveCreateGmail(customer.getName(), customer.getEmail());
     }
+
+    @Override
+    public Customer findCustomerByUsername(String username) {
+        return customerRepository.findCustomerByUsername(username);
+    }
 }

@@ -1,4 +1,4 @@
-<body>
+<body class="sticky-lg-top">
 <div class="container-fluid">
   <div class="row bg-info container-fluid ">
     <div class="col-lg-12">
@@ -26,7 +26,11 @@
             <a href="#"><span class="bi bi-headset"></span> CSKH: 1800 6865 </a>
           </li>
           <li>
-            <a href="#"><span class="bi bi-cart"></span> Giỏ hàng </a>
+            <a routerLink="/cart"><span class="bi bi-cart"></span>
+              Giỏ hàng
+              <span style="color: red" >({{cartCount}})</span>
+<!--              <span style="color: red" *ngIf="cartCount ">(0)</span>-->
+            </a>
           </li>
 
         </ul>
@@ -34,25 +38,25 @@
     </div>
     <div class="col-lg-3">
       <div class="row">
-        <div class="col-lg-6">
+        <div class="col-lg-5">
           <div class="menu ulli">
             <ul>
+
               <li>
-                <p  *ngIf="username != ''">Tài khoản:</p>
-              </li>
-              <li>
-                <a  *ngIf="username != ''" href="#"> {{username}}</a>
+                <a *ngIf="username" href="#"><span id="boot-icon" class="bi bi-person-circle"
+                                                   style="font-size: 1rem; color: rgb(255, 255, 255);"></span> {{username}}
+                </a>
               </li>
             </ul>
 
           </div>
         </div>
-        <div class="col-lg-6">
+        <div class="col-lg-7">
           <div class="menu ulli">
             <ul>
-              <li><a *ngIf="username == ''" routerLink="/login"><span class="bi bi-person-circle"></span> Đăng nhâp /
+              <li><a *ngIf="!username" routerLink="/login"><span class="bi bi-person-circle"></span> Đăng nhâp /
                 Đăng ký </a>
-                <a *ngIf="username != ''" (click)="whenLogout()"><span class="bi bi-person-circle"></span> Đăng xuất
+                <a *ngIf="username" (click)="whenLogout()"><span class="bi bi-person-circle"></span> Đăng xuất
                 </a></li>
             </ul>
 

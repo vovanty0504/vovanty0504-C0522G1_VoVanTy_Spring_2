@@ -8,6 +8,8 @@ import {DataResult} from '../dto/data-result';
 import {TokenStorageService} from './token-storage.service';
 import firebase from 'firebase';
 import User = firebase.User;
+import {ICart} from '../model/icart';
+import {IBookingLaptop} from '../model/i-booking-laptop';
 
 @Injectable({
   providedIn: 'root'
@@ -42,8 +44,42 @@ export class LaptopService {
     return this.http.get<ILaptopDto>(this.API_LAPTOP + 'laptop/find-by-id/' + id);
   }
 
-  // findByUsername(): Observable<any> {
-  //   return this.http.get<any>(this.API_LAPTOP + 'laptop/find-by-username' , this.httpOptions);
-  // }
+  findByUsername(): Observable<any> {
+    console.log(this.API_LAPTOP + 'laptop/get-customer/', this.httpOptions);
+    return this.http.get<any>(this.API_LAPTOP + 'laptop/get-customer/', this.httpOptions);
+  }
 
+  findLaptop(): Observable<any> {
+    return this.http.get<any>(this.API_LAPTOP + 'laptop/get-laptop/', this.httpOptions);
+  }
+
+
+  addToCart(quantity: number, customerId: number, laptopId: number): Observable<void> {
+    console.log(this.API_LAPTOP + 'booking/add-cart/' + quantity + '&' + customerId + '&' + laptopId);
+    return this.http.get<void>(this.API_LAPTOP + 'booking/add-cart/' + quantity + '&' + customerId + '&' + laptopId);
+  }
+
+  listCart(id: number): Observable<ICart[]> {
+    return this.http.get<ICart[]>(this.API_LAPTOP + 'booking/list-cart/' + id);
+  }
+
+  ascQuantity(id: number): Observable<void> {
+    return this.http.get<void>(this.API_LAPTOP + 'booking/asc-quantity/' + id);
+  }
+
+  descQuantity(id: number): Observable<void> {
+    return this.http.get<void>(this.API_LAPTOP + 'booking/desc-quantity/' + id);
+  }
+
+  payLaptop(id: number): Observable<void> {
+    return this.http.get<void>(this.API_LAPTOP + 'booking/pay-laptop/' + id);
+  }
+
+  deleteCart(id: number): Observable<void> {
+    return this.http.get<void>(this.API_LAPTOP + 'booking/delete-cart/' + id);
+  }
+
+  cartCount(id: number): Observable<any> {
+    return this.http.get<any>(this.API_LAPTOP + 'booking/cart-count/' + id);
+  }
 }

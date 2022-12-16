@@ -4,6 +4,7 @@ import {ILaptopType} from '../model/i-laptop-type';
 import Swal from 'sweetalert2';
 import {TokenStorageService} from '../service/token-storage.service';
 import {Router} from '@angular/router';
+import {IBookingLaptopDto} from '../dto/ibooking-laptop-dto';
 
 @Component({
   selector: 'app-navbar',
@@ -18,6 +19,9 @@ export class NavbarComponent implements OnInit {
   isCustomer = false;
   isAdmin = false;
   isEmployee = false;
+  idCustomer: number;
+  cartCount: number;
+  bookingLaptop: IBookingLaptopDto[];
 
   constructor(private laptopService: LaptopService,
               private tokenService: TokenStorageService,
@@ -26,14 +30,18 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit(): void {
     this.showUsername();
+    this.getCustomer();
   }
 
   showUsername() {
-    this.username = this.tokenService.getUser().username;
-    this.roles = this.tokenService.getUser().roles;
-    this.isCustomer = this.roles.indexOf('ROLE_CUSTOMER') !== -1;
-    this.isEmployee = this.roles.indexOf('ROLE_EMPLOYEE') !== -1;
-    this.isAdmin = this.roles.indexOf('ROLE_ADMIN') !== -1;
+    if (this.tokenService.isLogged()) {
+      this.username = this.tokenService.getUser().username;
+      this.roles = this.tokenService.getUser().roles;
+      this.isCustomer = this.roles.indexOf('ROLE_CUSTOMER') !== -1;
+      this.isEmployee = this.roles.indexOf('ROLE_EMPLOYEE') !== -1;
+      this.isAdmin = this.roles.indexOf('ROLE_ADMIN') !== -1;
+    }
+
   }
 
   getAllLaptopType() {
@@ -53,9 +61,22 @@ export class NavbarComponent implements OnInit {
     });
     this.tokenService.logOut();
     this.router.navigateByUrl('');
+    window.scroll(0, 0);
     this.username = '';
     this.isCustomer = false;
     this.isEmployee = false;
     this.isAdmin = false;
+  }
+
+  getCustomer(): void {
+    this.laptopService.findByUsername().subscribe(customer => {
+        this.idCustomer = customer.id;
+        this.laptopService.cartCount(this.idCustomer).subscribe(value => {
+            this.cartCount = value.cartCount;
+
+          }
+        );
+      }
+    );
   }
 }

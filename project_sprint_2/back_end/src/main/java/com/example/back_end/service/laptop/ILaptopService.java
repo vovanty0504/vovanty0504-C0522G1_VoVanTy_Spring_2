@@ -2,8 +2,10 @@ package com.example.back_end.service.laptop;
 
 import com.example.back_end.dto.laptop.ILaptopDto;
 import com.example.back_end.model.decentralization.User;
+import com.example.back_end.model.laptop.Laptop;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.query.Param;
 
 import java.util.Optional;
 
@@ -14,4 +16,5 @@ public interface ILaptopService {
 
     Optional<ILaptopDto> findByIdLaptop(Integer id);
 
+    Laptop findLaptop( Integer id);
 }

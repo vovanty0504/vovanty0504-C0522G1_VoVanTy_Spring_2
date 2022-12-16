@@ -19,9 +19,13 @@ public interface ILaptopDto {
 
     String getLaptopTypeName();
 
-    int getStatus();
+    String getStatus();
 
-    int getDiscountMoney();
+    String getDiscountMoney();
+
+    String getDiscount();
 
     Integer getId();
+
+
 }

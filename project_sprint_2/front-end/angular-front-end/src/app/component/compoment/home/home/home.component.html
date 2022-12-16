@@ -41,7 +41,7 @@
       <div class="col-lg-2 d-flex">
         <select style="border-radius: 7px;width: 200px" [(ngModel)]="endPrice">
           <option value="0">Mức giá</option>
-          <option [value]="4999999" >Dưới 5 triệu</option>
+          <option [value]="4999999">Dưới 5 triệu</option>
           <option [value]="9999999">Dưới 10 triệu</option>
           <option [value]="14999999">Dưới 15 triệu</option>
           <option [value]="19999999">Dưới 20 triệu</option>
@@ -80,21 +80,17 @@
                         </div>
                         <div class="text-left" style="background: white; text-align: left">
                           <h3>{{laptop.name}} {{laptop.cpu}} /RAM{{laptop.ram}}</h3>
-                          <p style="color: red;height: 10px"><b>{{laptop.discountMoney | number}} đ
+                          <p style="color: blue;height: 10px"><b>{{laptop.discountMoney | number}} đ
                           </b></p>
                           <p
                             style="color: #aaaaaa;height: 20px;text-decoration-line: line-through;font-size: 12px">{{laptop.price | number}}
                             đ</p>
                         </div>
                         <div class="d-flex" style="margin-left: 20px">
-                          <a href="">
-                            <span id="boot-icon9" class="bi bi-truck" style="font-size:1rem"></span>
-                            Mua ngay
-                          </a>
-                          <a href="" style="margin-left: 80px;color: #d8143b">
-                            <span id="boot-icon8" class="bi bi-cart4" style="font-size: 1rem; color: red;"></span>
-                            Giỏ hàng</a>
-
+                          <button (click)="addToCart(laptop.id)" style="width: 250px;height: auto" type="button"
+                                  class="btn btn-danger"><span
+                            id="boot-icon8" class="bi bi-cart4" style="font-size: 1rem; color: white;"></span>Giỏ hàng
+                          </button>
                         </div>
                       </div>
                     </div>
