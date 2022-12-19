@@ -7,6 +7,7 @@ import Swal from 'sweetalert2';
 import {ICustomer} from '../../../model/i-customer';
 import {IEmployee} from '../../../model/i-employee';
 import {ILaptop} from '../../../model/i-laptop';
+import {TokenStorageService} from '../../../service/token-storage.service';
 
 @Component({
   selector: 'app-computer-detail',
@@ -21,25 +22,43 @@ export class ComputerDetailComponent implements OnInit {
   customer: ICustomer[];
   employee: IEmployee[];
   laptopId: number;
+  roles: string[] = [];
+  isCustomer = false;
+  isAdmin = false;
+  isEmployee = false;
+  idCustomer: number;
+  username: string;
 
 
   constructor(private laptopService: LaptopService,
               private activatedRoute: ActivatedRoute,
-              private router: Router) {
+              private router: Router,
+              private tokenService: TokenStorageService) {
   }
 
   ngOnInit(): void {
     this.id = Number(this.activatedRoute.snapshot.params.id);
     this.laptopService.findById(this.id).subscribe(value => {
       this.laptopId = value.id;
-      console.log(this.laptopId);
       window.scroll(0, 0);
       this.laptop$ = new BehaviorSubject(value);
     });
+    this.showUsername();
+    window.scroll(0, 0);
 
-
-    this.getCustomer();
   }
+
+  showUsername() {
+    if (this.tokenService.isLogged()) {
+      this.getCustomer();
+      this.username = this.tokenService.getUser().username;
+      this.roles = this.tokenService.getUser().roles;
+      this.isCustomer = this.roles.indexOf('ROLE_CUSTOMER') !== -1;
+      this.isEmployee = this.roles.indexOf('ROLE_EMPLOYEE') !== -1;
+      this.isAdmin = this.roles.indexOf('ROLE_ADMIN') !== -1;
+    }
+  }
+
 
   getCustomer(): void {
     this.laptopService.findByUsername().subscribe(value => {
@@ -52,28 +71,31 @@ export class ComputerDetailComponent implements OnInit {
 
 
   addToCart(): void {
-    this.laptopService.addToCart(this.quantityChoose, this.idUser, this.laptopId).subscribe(() => {
-      console.log(this.idUser);
-      const Toast = Swal.mixin({
-        toast: true,
-        position: 'top-end',
-        showConfirmButton: false,
-        timer: 2000,
-        timerProgressBar: true,
-        didOpen: (toast) => {
-          toast.addEventListener('mouseenter', Swal.stopTimer);
-          toast.addEventListener('mouseleave', Swal.resumeTimer);
-        }
-      });
+    if (this.idUser == null) {
+      this.router.navigateByUrl('/login');
+    } else {
+      this.laptopService.addToCart(this.quantityChoose, this.idUser, this.laptopId).subscribe(() => {
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 2000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer);
+            toast.addEventListener('mouseleave', Swal.resumeTimer);
+          }
+        });
 
-      Toast.fire({
-        icon: 'success',
-        title: 'Thêm vào giỏ hàng thành công!'
+        Toast.fire({
+          icon: 'success',
+          title: 'Thêm vào giỏ hàng thành công!'
+        });
+        window.setTimeout(this.loadPage, 500);
+      }, error => {
       });
-      window.setTimeout(this.loadPage, 500);
-    }, error => {
-      console.log(error);
-    });
+    }
+
   }
 
   loadPage(): void {

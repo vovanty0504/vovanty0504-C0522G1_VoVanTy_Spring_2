@@ -36,7 +36,7 @@ public interface IBookingLaptopRepository extends JpaRepository<BookingLaptop, I
                            @Param("laptopId") Integer laptopId);
 
     @Query(value = "select booking_laptop.id as id, laptop.price as price, promotion.discount as discount, " +
-            "booking_laptop.quantity as quantity, laptop.image as image,laptop.name as name " +
+            "booking_laptop.quantity as quantity, laptop.image as image, laptop.name as name " +
             "from booking_laptop " +
             "join customer on customer.id = booking_laptop.customer_id " +
             "join laptop on laptop.id = booking_laptop.laptop_id " +
@@ -59,7 +59,8 @@ public interface IBookingLaptopRepository extends JpaRepository<BookingLaptop, I
     void deleteCart(@Param("id") Integer id);
 
     @Modifying
-    @Query(value = "update booking_laptop set status = 1 where id = :id and is_delete = 0 ", nativeQuery = true)
+    @Query(value = "update booking_laptop set booking_laptop.status = 1 where booking_laptop.customer_id = :id " +
+            "and is_delete = 0 and booking_laptop.status = 0 ", nativeQuery = true)
     void payBookingLaptop(@Param("id") Integer id);
 
     @Query(value = "select count(id) as cartCount from booking_laptop " +

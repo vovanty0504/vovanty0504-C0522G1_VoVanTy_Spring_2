@@ -9,12 +9,14 @@ import {FormsModule} from '@angular/forms';
 
 
 @NgModule({
-  declarations: [HomeComponent, ComputerDetailComponent, CartComponent],
-  imports: [
-    CommonModule,
-    HomeRoutingModule,
-    FormsModule
-  ]
+    declarations: [HomeComponent, ComputerDetailComponent, CartComponent],
+    exports: [
+    ],
+    imports: [
+        CommonModule,
+        HomeRoutingModule,
+        FormsModule
+    ]
 })
 export class HomeModule {
 }

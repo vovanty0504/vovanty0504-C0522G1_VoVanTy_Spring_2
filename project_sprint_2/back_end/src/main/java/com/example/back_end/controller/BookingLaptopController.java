@@ -47,6 +47,7 @@ public class BookingLaptopController {
 
     @GetMapping("/pay-laptop/{id}")
     public ResponseEntity<BookingLaptop> payBookingLaptop(@PathVariable("id") Integer id) {
+        System.out.println("paypal");
         bookingLaptopService.payBookingLaptop(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }

@@ -84,7 +84,6 @@ public class LaptopController {
     public ResponseEntity<Customer> getCustomerByUsername(HttpServletRequest request) {
         String headerAuth = request.getHeader("Authorization");
         String username = jwtTokenUtil.getUsernameFromJwtToken(headerAuth.substring(7));
-        System.out.println(username);
         Customer customer = customerService.findCustomerByUsername(username);
         return new ResponseEntity<>(customer, HttpStatus.OK);
     }

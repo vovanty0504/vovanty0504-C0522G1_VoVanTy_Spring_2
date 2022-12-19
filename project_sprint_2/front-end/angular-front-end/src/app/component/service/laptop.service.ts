@@ -45,7 +45,6 @@ export class LaptopService {
   }
 
   findByUsername(): Observable<any> {
-    console.log(this.API_LAPTOP + 'laptop/get-customer/', this.httpOptions);
     return this.http.get<any>(this.API_LAPTOP + 'laptop/get-customer/', this.httpOptions);
   }
 
@@ -55,7 +54,6 @@ export class LaptopService {
 
 
   addToCart(quantity: number, customerId: number, laptopId: number): Observable<void> {
-    console.log(this.API_LAPTOP + 'booking/add-cart/' + quantity + '&' + customerId + '&' + laptopId);
     return this.http.get<void>(this.API_LAPTOP + 'booking/add-cart/' + quantity + '&' + customerId + '&' + laptopId);
   }
 
@@ -72,6 +70,7 @@ export class LaptopService {
   }
 
   payLaptop(id: number): Observable<void> {
+    console.log(this.API_LAPTOP + 'booking/pay-laptop/' + id);
     return this.http.get<void>(this.API_LAPTOP + 'booking/pay-laptop/' + id);
   }
 
@@ -82,4 +81,7 @@ export class LaptopService {
   cartCount(id: number): Observable<any> {
     return this.http.get<any>(this.API_LAPTOP + 'booking/cart-count/' + id);
   }
+
+
+
 }

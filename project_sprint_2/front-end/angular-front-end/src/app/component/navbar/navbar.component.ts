@@ -30,19 +30,29 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit(): void {
     this.showUsername();
-    this.getCustomer();
+    // this.getCustomer();
   }
 
   showUsername() {
     if (this.tokenService.isLogged()) {
+      this.getCustomer();
       this.username = this.tokenService.getUser().username;
       this.roles = this.tokenService.getUser().roles;
       this.isCustomer = this.roles.indexOf('ROLE_CUSTOMER') !== -1;
       this.isEmployee = this.roles.indexOf('ROLE_EMPLOYEE') !== -1;
       this.isAdmin = this.roles.indexOf('ROLE_ADMIN') !== -1;
     }
+  }
+
+  clickCart() {
+    if (this.username == null) {
+      this.router.navigateByUrl('/login');
+    } else {
+      this.router.navigateByUrl('/cart');
+    }
 
   }
+
 
   getAllLaptopType() {
     this.laptopService.getAllLaptopType().subscribe(value => {
@@ -50,6 +60,10 @@ export class NavbarComponent implements OnInit {
     });
   }
 
+
+  loadPage(): void {
+    window.location.replace('');
+  }
 
   whenLogout() {
     Swal.fire({
@@ -60,7 +74,7 @@ export class NavbarComponent implements OnInit {
       timer: 1000
     });
     this.tokenService.logOut();
-    this.router.navigateByUrl('');
+    this.loadPage();
     window.scroll(0, 0);
     this.username = '';
     this.isCustomer = false;
@@ -73,7 +87,6 @@ export class NavbarComponent implements OnInit {
         this.idCustomer = customer.id;
         this.laptopService.cartCount(this.idCustomer).subscribe(value => {
             this.cartCount = value.cartCount;
-
           }
         );
       }

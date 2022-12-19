@@ -1,18 +1,14 @@
 package com.example.back_end.repository.laptop;
 
 import com.example.back_end.dto.laptop.ILaptopDto;
-import com.example.back_end.model.customer.Customer;
-import com.example.back_end.model.decentralization.User;
 import com.example.back_end.model.laptop.Laptop;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,13 +35,13 @@ public interface ILaptopRepository extends JpaRepository<Laptop, Integer> {
             "laptop.price * (1 - ifnull(promotion.discount, 0)/100)as discountMoney  " +
             "from laptop " +
             "join promotion on  promotion.id = laptop.promotion_id " +
-            "where laptop.name like %:nameSearch% having (discountMoney between  :startPrice and :endPrice) " +
-            "and laptop.is_delete = 0 order by discountMoney desc",
+            "where laptop.name like %:nameSearch% and laptop.is_delete = 0 having (discountMoney between  :startPrice and :endPrice) " +
+            " order by discountMoney desc",
             countQuery = "select count(*), " +
                     "laptop.price * (1 - ifnull(promotion.discount, 0)/100)as discountMoney  " +
                     " from laptop " +
                     "join promotion on  promotion.id = laptop.promotion_id " +
-                    "where laptop.name like %:nameSearch%  and laptop.is_delete = 0 having (discountMoney between  :startPrice and :endPrice) ",
+                    "where laptop.name like %:nameSearch% having (discountMoney between  :startPrice and :endPrice) ",
             nativeQuery = true)
     Page<ILaptopDto> findAllLaptopAndSearchPrice(Pageable pageable,
                                                  @Param("nameSearch") String nameSearch,

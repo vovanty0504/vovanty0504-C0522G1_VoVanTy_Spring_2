@@ -103,13 +103,27 @@ foreign key(promotion_id) references promotion(id)
 create table if not exists booking_laptop(
 id int primary key auto_increment,
 is_delete bit default 0,
+laptop_booking_time datetime,
 status bit default 0,
+quantity int,
 laptop_id int,
 customer_id int,
 foreign key(laptop_id) references laptop(id),
 foreign key(customer_id) references customer(id)
 );
 
+
+create table if not exists history_booking_laptop(
+id int primary key auto_increment,
+is_delete int,
+`name` varchar(100),
+laptop_booking_time datetime,
+status int,
+quantity int,
+price int,
+customer_id int,
+foreign key(customer_id) references customer(id)
+);
 
 
 
