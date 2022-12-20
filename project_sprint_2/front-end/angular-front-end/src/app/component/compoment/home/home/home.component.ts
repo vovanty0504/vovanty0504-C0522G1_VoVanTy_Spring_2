@@ -84,7 +84,6 @@ export class HomeComponent implements OnInit {
 
   getCustomer(): void {
     this.laptopService.findByUsername().subscribe(value => {
-
       this.customer = value;
       if (this.customer != null) {
         this.idUser = value.id;

@@ -13,6 +13,7 @@ public class Customer {
     private String name;
     private boolean isDelete;
     private String dayOfBirth;
+    private String image;
     private Integer gender;
     private String idCard;
     private String email;
@@ -32,12 +33,13 @@ public class Customer {
     public Customer() {
     }
 
-    public Customer(Integer id, String name, boolean isDelete, String dayOfBirth, Integer gender, String idCard,
-                    String email, String address, String phoneNumber, CustomerType customerType, User user) {
+    public Customer(Integer id, String name, boolean isDelete, String dayOfBirth, String image, Integer gender,
+                    String idCard, String email, String address, String phoneNumber, CustomerType customerType, User user) {
         this.id = id;
         this.name = name;
         this.isDelete = isDelete;
         this.dayOfBirth = dayOfBirth;
+        this.image = image;
         this.gender = gender;
         this.idCard = idCard;
         this.email = email;
@@ -133,5 +135,13 @@ public class Customer {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

@@ -1,11 +1,11 @@
-package com.example.back_end.model.customer;
+package com.example.back_end.model.laptop;
 
-import com.example.back_end.model.laptop.Laptop;
+import com.example.back_end.model.customer.Customer;
 
 import javax.persistence.*;
 
 @Entity
-public class HistoryBookingLaptop {
+public class History {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -21,11 +21,11 @@ public class HistoryBookingLaptop {
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
     private Customer customer;
 
-    public HistoryBookingLaptop() {
+    public History() {
     }
 
-    public HistoryBookingLaptop(Integer id, String name, boolean isDelete, String laptopBookingTime, int status, int price,
-                                int quantity, Customer customer) {
+    public History(Integer id, String name, boolean isDelete, String laptopBookingTime, int status, int price,
+                   int quantity, Customer customer) {
         this.id = id;
         this.name = name;
         this.isDelete = isDelete;

@@ -1,5 +1,6 @@
 package com.example.back_end.repository.laptop;
 
+import com.example.back_end.dto.laptop.IHistoryDto;
 import com.example.back_end.dto.laptop.ILaptopDto;
 import com.example.back_end.model.laptop.Laptop;
 import org.springframework.data.domain.Page;
@@ -62,11 +63,16 @@ public interface ILaptopRepository extends JpaRepository<Laptop, Integer> {
     @Query(value = "select * from laptop where is_delete = 0 and id = :id", nativeQuery = true)
     Laptop findLaptop(@Param("id") Integer id);
 
-    @Query(value = "select laptop.quantity as quantity ,booking_laptop.quantity as bookingQuantity " +
-            "from laptop " +
-            "join booking_laptop on laptop.id = booking_laptop.laptop_id " +
-            "join customer on customer.id = booking_laptop.customer_id " +
-            "where booking_laptop.customer_id = :id ", nativeQuery = true)
-    List<ILaptopDto> payLaptopQuantity(@Param("id") Integer id);
+    @Query(value = "select history.id as id, history.name as name , history.laptop_booking_time as dayBooking, history.status as status," +
+            "history.price as price, history.quantity as quantity " +
+            "from customer " +
+            "join history on history.customer_id = customer.id " +
+            "where customer.username = :username and history.is_delete = 0 and history.status = 1 " +
+            "order by history.laptop_booking_time desc",
+            countQuery = "select count(*) from customer " +
+                    "join history on history.customer_id = customer.id " +
+                    "where customer.username = :username and history.is_delete = 0 and history.status = 1 " +
+                    "order by history.laptop_booking_time desc", nativeQuery = true)
+    Page<IHistoryDto> getAllHistory(@Param("username") String username, Pageable pageable);
 
 }

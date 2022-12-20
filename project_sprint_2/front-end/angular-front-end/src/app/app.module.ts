@@ -9,6 +9,7 @@ import {NavbarComponent} from './component/navbar/navbar.component';
 import {FooterComponent} from './component/footer/footer.component';
 import {DecentralizationModule} from './component/compoment/decentralization/decentralization.module';
 import {GoogleLoginProvider, SocialAuthServiceConfig, SocialLoginModule} from 'angularx-social-login';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 const googleLoginOptions = {
   scope: 'profile email',
   plugin_name: 'login'
@@ -28,6 +29,7 @@ const googleLoginOptions = {
     HomeModule,
     DecentralizationModule,
     SocialLoginModule,
+    NgbModule,
 
   ],
   providers: [

@@ -113,7 +113,7 @@ foreign key(customer_id) references customer(id)
 );
 
 
-create table if not exists history_booking_laptop(
+create table if not exists `history`(
 id int primary key auto_increment,
 is_delete int,
 `name` varchar(100),
@@ -125,5 +125,28 @@ customer_id int,
 foreign key(customer_id) references customer(id)
 );
 
+-- drop trigger history_laptop
+DELIMITER $$
+create trigger history_laptop
+after update on booking_laptop  for each row
+begin
+declare price int ;
+declare `name_laptop` varchar(500);
+select (laptop.price *(1 - ifnull(promotion.discount, 0)/100)) * booking_laptop.quantity into price 
+            from booking_laptop
+			join laptop on laptop.id = booking_laptop.laptop_id
+            join promotion on promotion.id = laptop.promotion_id
+            where booking_laptop.id = new.id;
+            
+            select laptop.name into name_laptop 
+            from booking_laptop
+			join laptop on laptop.id = booking_laptop.laptop_id
+            join promotion on promotion.id = laptop.promotion_id
+            where booking_laptop.id = new.id;
+            
+insert into `history`(customer_id,laptop_booking_time,price,name,status,quantity,is_delete)
+values(new.customer_id, now(),price,name_laptop,new.status,new.quantity,new.is_delete);
+end $$
+DELIMITER ;
 
 

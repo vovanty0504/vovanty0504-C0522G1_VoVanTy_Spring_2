@@ -10,6 +10,7 @@ import firebase from 'firebase';
 import User = firebase.User;
 import {ICart} from '../model/icart';
 import {IBookingLaptop} from '../model/i-booking-laptop';
+import {IHistory} from '../model/ihistory';
 
 @Injectable({
   providedIn: 'root'
@@ -29,6 +30,13 @@ export class LaptopService {
       'Access-Control-Allow-Origin': 'http://localhost:4200',
       'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS'
     };
+  }
+
+  getAllHistory(curPage: number, numberRecord: number, username: string): Observable<DataResult<IHistory>> {
+    console.log(this.API_LAPTOP + 'laptop/history/' + username
+      + '?page=' + (curPage - 1) + '&size=' + numberRecord);
+    return this.http.get<DataResult<IHistory>>(this.API_LAPTOP + 'laptop/history/' + username
+      + '?page=' + (curPage - 1) + '&size=' + numberRecord);
   }
 
   getAllLaptop(page: number, nameSearch: string, startPrice: number, endPrice: number): Observable<DataResult<ILaptopDto>> {
@@ -82,6 +90,9 @@ export class LaptopService {
     return this.http.get<any>(this.API_LAPTOP + 'booking/cart-count/' + id);
   }
 
+  findAllCustomer(username: string): Observable<any> {
+    return this.http.get(this.API_LAPTOP + 'laptop/find-all-customer/' + username);
+  }
 
 
 }

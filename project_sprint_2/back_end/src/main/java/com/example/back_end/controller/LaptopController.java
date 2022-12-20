@@ -1,5 +1,6 @@
 package com.example.back_end.controller;
 
+import com.example.back_end.dto.laptop.IHistoryDto;
 import com.example.back_end.dto.laptop.ILaptopDto;
 import com.example.back_end.jwt.JwtTokenUtil;
 import com.example.back_end.model.customer.Customer;
@@ -40,6 +41,19 @@ public class LaptopController {
 
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
+
+
+    @GetMapping("/history/{username}")
+    public ResponseEntity<Page<IHistoryDto>> getAllHistory(@PageableDefault Pageable pageable,
+                                                           @PathVariable(value = "username") String username) {
+        System.out.println(username);
+        Page<IHistoryDto> historyDtoPage = laptopService.getAllHistory(username, pageable);
+        if (historyDtoPage.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(historyDtoPage, HttpStatus.OK);
+
+    }
 
     @GetMapping("/list")
     public ResponseEntity<Page<ILaptopDto>> findAllLaptopAndSearch(
@@ -94,15 +108,21 @@ public class LaptopController {
         return new ResponseEntity<>(laptop, HttpStatus.OK);
     }
 
-    @GetMapping("/find-by-username")
-    public ResponseEntity<?> findByUsername(HttpServletRequest request) {
-        String headerAuth = request.getHeader("Authorization");
-        String username = jwtTokenUtil.getUsernameFromJwtToken(headerAuth.substring(7));
-        Optional<User> user = userService.findUserByUsername(username);
+//    @GetMapping("/find-by-username")
+//    public ResponseEntity<?> findByUsername(HttpServletRequest request) {
+//        String headerAuth = request.getHeader("Authorization");
+//        String username = jwtTokenUtil.getUsernameFromJwtToken(headerAuth.substring(7));
+//        Optional<User> user = userService.findUserByUsername(username);
+//
+//        if (user.isPresent()) {
+//            return new ResponseEntity<>(user, HttpStatus.OK);
+//        }
+//        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+//    }
 
-        if (user.isPresent()) {
-            return new ResponseEntity<>(user, HttpStatus.OK);
-        }
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    @GetMapping("/find-all-customer/{username}")
+    public ResponseEntity<?> findAllCustomer(@PathVariable(value = "username") String username) {
+        Customer customer = customerService.findCustomerByUsername(username);
+        return new ResponseEntity<>(customer, HttpStatus.OK);
     }
 }

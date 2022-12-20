@@ -1,5 +1,6 @@
 package com.example.back_end.service.laptop.impl;
 
+import com.example.back_end.dto.laptop.IHistoryDto;
 import com.example.back_end.dto.laptop.ILaptopDto;
 import com.example.back_end.model.decentralization.User;
 import com.example.back_end.model.laptop.Laptop;
@@ -35,6 +36,11 @@ public class LaptopService implements ILaptopService {
     @Override
     public Laptop findLaptop(Integer id) {
         return iLaptopRepository.findLaptop(id);
+    }
+
+    @Override
+    public Page<IHistoryDto> getAllHistory(String username, Pageable pageable) {
+        return iLaptopRepository.getAllHistory(username, pageable);
     }
 
 
