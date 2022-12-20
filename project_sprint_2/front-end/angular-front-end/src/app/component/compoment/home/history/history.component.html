@@ -11,58 +11,33 @@ QUẢN LÝ TÀI KHOẢN</span></h3>
       <div class="col-lg-4 col-12 col-md-6 text-center">
         <div style="box-shadow: 0 8px 15px lightblue">
           <div class="bg-warning">
-            <img src="https://znews-photo.zingcdn.me/w660/Uploaded/qhj_yvobvhfwbv/2018_07_18/Nguyen_Huy_Binh1.jpg "
+            <img src="{{image}}"
                  height="200"
                  width="200" class="m-3">
           </div>
-          <!--          <div style="background-color: #f2f2f2">-->
           <h3 style="color: black">{{customerName}}</h3>
-          <!--            <p style="color: black">-->
+                      <a>
+                        <button (click)="whenLogout()" style="height: auto;width: auto" type="button" class="btn btn-danger">
+                          Đăng xuất
+                        </button>
+                      </a>
 
-          <!--              <span *ngIf="customerTypeName == 4"> <b>Thành Viên</b>: Đồng</span>-->
-          <!--              <span *ngIf="customerTypeName == 3"> <b>Thành Viên</b>: Bạc</span>-->
-          <!--              <span *ngIf="customerTypeName == 2"> <b>Thành Viên</b>: Vàng</span>-->
-          <!--              <span *ngIf="customerTypeName == 1"> <b>Thành Viên</b>: Kim Cương</span><br>-->
-          <!--              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"-->
-          <!--                   class="bi bi-award-fill" viewBox="0 0 16 16">-->
-          <!--                <path-->
-          <!--                  d="m8 0 1.669.864 1.858.282.842 1.68 1.337 1.32L13.4 6l.306 1.854-1.337 1.32-.842 1.68-1.858.282L8 12l-1.669-.864-1.858-.282-.842-1.68-1.337-1.32L2.6 6l-.306-1.854 1.337-1.32.842-1.68L6.331.864 8 0z"/>-->
-          <!--                <path d="M4 11.794V16l4-1 4 1v-4.206l-2.018.306L8 13.126 6.018 12.1 4 11.794z"/>-->
-          <!--              </svg>-->
-          <!--              <span *ngIf="totalPoint"><b>Điểm tích lũy</b>: {{totalPoint | number  }} </span>-->
-          <!--              <span *ngIf="!totalPoint"><b>Điểm tích lũy</b>: 0 </span><br>-->
-          <!--              <span *ngIf="customerTypeName == 4"> <b>Điểm nâng hạng thành viên:</b>: 1500 </span>-->
-          <!--              <span *ngIf="customerTypeName == 3"> <b>Điểm nâng hạng thành viên:</b>: 3000 </span>-->
-          <!--              <span *ngIf="customerTypeName == 2"> <b>Điểm nâng hạng thành viên:</b>: 5000 </span>-->
+                      <hr>
+                      <a routerLink="/customer">
+                        <span class="text-dark">Thông tin tài khoản</span>
+                      </a>
+                      <hr>
+                      <a routerLink="/history">
+                        <span class="text-dark">Lịch sử </span>
+                      </a>
+                      <hr>
 
-          <!--            </p>-->
-          <!--            <a>-->
-          <!--              <button class="button btnRed " (click)="whenLogout()">Đăng xuất</button>-->
-          <!--            </a>-->
-          <!--            <hr>-->
-          <!--            <a routerLink="/register/info">-->
-          <!--              <span class="text-dark">Thông tin tài khoản</span>-->
-          <!--            </a>-->
-          <!--            <hr>-->
-          <!--            <a routerLink="/ticket/history/point">-->
-          <!--              <span class="text-dark">Lịch sử điểm</span>-->
-          <!--            </a>-->
-          <!--            <hr>-->
-          <!--            <a routerLink="/ticket/history/booking/">-->
-          <!--              <span class="text-dark">Vé đã đặt</span>-->
-          <!--            </a>-->
-          <!--            <hr>-->
-          <!--            <a routerLink="/ticket/history/canceled">-->
-          <!--              <span class="text-dark">Vé đã hủy</span>-->
-          <!--            </a>-->
-          <!--            <hr>-->
-          <!--          </div>-->
         </div>
       </div>
 
       <div class="col-lg-8 col-12 c0l-md-6 table-responsive">
 
-        <h2 class="text-dark text-center">VÉ ĐÃ ĐẶT</h2>
+        <h2 class="text-dark text-center">Lịch sử</h2>
         <div class="row">
           <div class="col-lg-8"></div>
           <div class="col-lg-4">
@@ -108,26 +83,21 @@ QUẢN LÝ TÀI KHOẢN</span></h3>
             </div>
           </div>
           <div class="col-lg-6">
-            <nav aria-label="Page navigation example">
-              <ul class="pagination">
-                <li class="page-item">
-                  <button *ngIf="page > 1" class="page-link" (click)="previous()" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                  </button>
-                </li>
-                <li class="page-item">
-                  <button *ngIf="page > (totalPage - 1)" class="page-link" (click)="next()" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                  </button>
-                </li>
-              </ul>
-            </nav>
+            <div class="d-flex justify-content-between  text-white" *ngIf="action">
+              <ngb-pagination
+                [collectionSize]="(total$ | async)!"
+                [(page)]="page"
+                [maxSize]="pageSize"
+                [pageSize]="pageSize"
+                (pageChange)="getAllHistory()">
+                <ng-template ngbPaginationNumber let-page>{{ page }}</ng-template>
+              </ngb-pagination>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-
 </div>
 <div class="col-lg-2"></div>
 <h1>.</h1>

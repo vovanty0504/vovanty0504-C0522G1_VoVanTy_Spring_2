@@ -26,6 +26,9 @@
             <a href="#"><span class="bi bi-headset"></span> CSKH: 1800 6865 </a>
           </li>
           <li>
+            <a routerLink="/history"><span class="bi bi-pencil"></span> Lịch sử</a>
+          </li>
+          <li>
             <a (click)="clickCart()" style="cursor: pointer"><span class="bi bi-cart"></span>
               Giỏ hàng
               <span style="color: red" *ngIf="username">({{cartCount}})</span>
@@ -44,7 +47,7 @@
             <ul>
 
               <li>
-                <a *ngIf="username" routerLink="/history"><span id="boot-icon" class="bi bi-person-circle"
+                <a *ngIf="username" routerLink="/customer"><span id="boot-icon" class="bi bi-person-circle"
                                                    style="font-size: 1rem; color: rgb(255, 255, 255);"></span> {{username}}
                 </a>
               </li>

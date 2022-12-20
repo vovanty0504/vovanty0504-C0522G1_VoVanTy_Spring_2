@@ -1,39 +1,37 @@
 import {Component, OnInit} from '@angular/core';
-import {TokenStorageService} from '../../../service/token-storage.service';
 import {LaptopService} from '../../../service/laptop.service';
-import {BehaviorSubject, Observable} from 'rxjs';
-import {IHistoryDto} from '../../../dto/ihistory-dto';
+import {ActivatedRoute, Router} from '@angular/router';
+import {TokenStorageService} from '../../../service/token-storage.service';
+import {ICustomer} from '../../../model/i-customer';
+import {BehaviorSubject} from 'rxjs';
+import {ILaptopDto} from '../../../dto/ilaptop-dto';
 import Swal from "sweetalert2";
 
 @Component({
-  selector: 'app-history',
-  templateUrl: './history.component.html',
-  styleUrls: ['./history.component.css']
+  selector: 'app-customer-detail',
+  templateUrl: './customer-detail.component.html',
+  styleUrls: ['./customer-detail.component.css']
 })
-export class HistoryComponent implements OnInit {
+export class CustomerDetailComponent implements OnInit {
 
   roles: string[] = [];
   isCustomer = false;
   isAdmin = false;
   isEmployee = false;
   username = '';
-  idCustomer: number;
-  historyDto$: Observable<IHistoryDto[]>;
-  action: boolean;
   customerName = '';
   image = '';
-  total$: Observable<number>;
-  page = 1;
-  pageSize = 5;
+  customer$: BehaviorSubject<ICustomer>;
 
-
-  constructor(private tokenService: TokenStorageService,
-              private laptopService: LaptopService) {
+  constructor(private laptopService: LaptopService,
+              private activatedRoute: ActivatedRoute,
+              private router: Router,
+              private tokenService: TokenStorageService) {
   }
+
 
   ngOnInit(): void {
     this.showUsername();
-    this.getAllHistory();
     this.getAllCustomer();
     window.scroll(0, 0);
 
@@ -41,7 +39,6 @@ export class HistoryComponent implements OnInit {
 
   showUsername() {
     if (this.tokenService.isLogged()) {
-
       this.username = this.tokenService.getUser().username;
       this.roles = this.tokenService.getUser().roles;
       this.isCustomer = this.roles.indexOf('ROLE_CUSTOMER') !== -1;
@@ -50,23 +47,9 @@ export class HistoryComponent implements OnInit {
     }
   }
 
-  getAllHistory() {
-    this.laptopService.getAllHistory(this.page, this.pageSize, this.username).subscribe(value => {
-      if (value != null) {
-        this.action = true;
-        this.historyDto$ = new BehaviorSubject<IHistoryDto[]>(value.content);
-        this.total$ = new BehaviorSubject<number>(value.totalElements);
-      } else {
-        console.log('a');
-        this.action = false;
-      }
-    });
-  }
-
   getAllCustomer() {
     this.laptopService.findAllCustomer(this.username).subscribe(value => {
-      this.customerName = value.name;
-      this.image = value.image;
+      this.customer$ = new BehaviorSubject(value);
     });
   }
 
@@ -90,5 +73,4 @@ export class HistoryComponent implements OnInit {
   loadPage(): void {
     window.location.replace('');
   }
-
 }

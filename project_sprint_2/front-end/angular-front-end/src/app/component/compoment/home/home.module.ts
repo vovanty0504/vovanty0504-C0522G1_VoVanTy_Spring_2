@@ -6,14 +6,14 @@ import {HomeComponent} from './home/home.component';
 import {ComputerDetailComponent} from './computer-detail/computer-detail.component';
 import {CartComponent} from './cart/cart.component';
 import {FormsModule} from '@angular/forms';
-import { HistoryComponent } from './history/history.component';
+import {HistoryComponent} from './history/history.component';
 import {NgbModule, NgbPaginationModule} from '@ng-bootstrap/ng-bootstrap';
+import {CustomerDetailComponent} from './customer-detail/customer-detail.component';
 
 
 @NgModule({
-    declarations: [HomeComponent, ComputerDetailComponent, CartComponent, HistoryComponent],
-    exports: [
-    ],
+  declarations: [HomeComponent, ComputerDetailComponent, CartComponent, HistoryComponent, CustomerDetailComponent],
+  exports: [],
   imports: [
     CommonModule,
     HomeRoutingModule,

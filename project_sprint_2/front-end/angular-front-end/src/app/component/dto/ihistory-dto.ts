@@ -4,4 +4,5 @@ export interface IHistoryDto {
   status?: number;
   price?: number;
   quantity?: number;
+  image?: number;
 }

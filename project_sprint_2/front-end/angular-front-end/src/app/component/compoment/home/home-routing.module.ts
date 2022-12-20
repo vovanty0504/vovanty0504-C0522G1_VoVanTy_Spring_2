@@ -5,6 +5,7 @@ import {ComputerDetailComponent} from './computer-detail/computer-detail.compone
 import {CartComponent} from './cart/cart.component';
 import {AuthGuard} from '../decentralization/auth.guard';
 import {HistoryComponent} from './history/history.component';
+import {CustomerDetailComponent} from './customer-detail/customer-detail.component';
 
 
 const routes: Routes = [
@@ -25,6 +26,9 @@ const routes: Routes = [
   },
   {
     path: 'history', component: HistoryComponent
+  },
+  {
+    path: 'customer', component: CustomerDetailComponent
   }
 ];
 
