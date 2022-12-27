@@ -1,0 +1,73 @@
+<div class="text-center  mt-3" id="head"><h2
+  class="m-0 text-light pt-2 ">CHỈNH SỬA NHÂN VIÊN</h2></div>
+<form [formGroup]="formGroupLaptop">
+  <div class="container">
+
+    <div class="row">
+      <label for="name"><b>name</b><span>*</span>
+      </label>
+      <input type="text" required id="name" formControlName="name">
+    </div>
+
+    <div class="row">
+      <label for="code"><b>cpu</b><span>*</span></label>
+
+      <input type="text" required id="code" formControlName="cpu">
+    </div>
+
+    <div class="row">
+      <label for="screen"><b>screen</b><span>*</span>
+      </label>
+      <input type="text" required id="screen" formControlName="screen">
+    </div>
+
+    <div class="row">
+      <label for="graphicsCard"><b>graphics Card</b><span>*</span>
+      </label>
+      <input type="text" required id="graphicsCard" formControlName="graphicsCard">
+    </div>
+
+    <div class="row">
+      <label for="image"><b>image</b><span>*</span></label>
+      <input type="text" required id="image" formControlName="image">
+    </div>
+
+    <div class="row">
+      <label for="ram"><b>ram</b><span>*</span></label>
+
+      <input type="text" required id="ram" formControlName="ram">
+    </div>
+
+    <div class="row">
+      <label for="quantity"><b>quantity</b><span>*</span></label>
+      <input type="text" required id="quantity" formControlName="quantity">
+    </div>
+
+    <div class="row">
+      <label for="price"><b>price</b><span>*</span></label>
+      <input type="text" required id="price" formControlName="price">
+    </div>
+
+    <div class="row" formGroupName="laptopType">
+      <label for="laptopTypeId"><b>laptopTypeId</b><span>*</span></label>
+      <input type="text" required id="laptopTypeId" formControlName="id">
+    </div>
+
+    <div class="row" formGroupName="promotion">
+      <label for="promotionId"><b>promotionId</b><span>*</span></label>
+      <input type="text" required id="promotionId" formControlName="name">
+    </div>
+
+    <div class="row mt-3">
+      <div class="col-lg-6">
+        <button type="submit" class="button greenBorder btnGreen" style="width: 90px; margin-left: 30px">Lưu</button>
+      </div>
+      <div class="col-lg-6">
+        <button type="button" class="button yellowBorder btnYellow " style="width: 90px; margin-left: 30px"
+                routerLink="/list">Quay lại
+        </button>
+      </div>
+    </div>
+  </div>
+
+</form>

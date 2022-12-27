@@ -1,0 +1,89 @@
+<body>
+<div class="row">
+  <div class="col-lg-1">
+  </div>
+  <div class="col-lg-9">
+    <div class="row mt-3">
+      <div>
+        <h3 class=" fw-bold text-dark mb-4 mt-5"><span style="box-shadow: 0 8px 15px lightblue; padding: 11px">
+QUẢN LÝ TÀI KHOẢN</span></h3>
+      </div>
+      <div class="col-lg-4 col-12 col-md-6 text-center" *ngIf="customer$ | async">
+        <div style="box-shadow: 0 8px 15px lightblue">
+          <div class="bg-warning">
+            <img src="{{customer$.value.image}}"
+                 height="200"
+                 width="200" class="m-3">
+          </div>
+          <h3 style="color: black">{{customer$.value.name}}</h3>
+
+          <a>
+            <button (click)="whenLogout()" style="height: auto;width: auto" type="button" class="btn btn-danger">
+              Đăng xuất
+            </button>
+          </a>
+
+          <hr>
+          <a routerLink="/customer">
+            <span class="text-dark">Thông tin tài khoản</span>
+          </a>
+          <hr>
+          <a routerLink="/history">
+            <span class="text-dark">Lịch sử </span>
+          </a>
+          <hr>
+        </div>
+      </div>
+
+      <div class="col-lg-8 col-12 c0l-md-6 ">
+
+        <h2 class="text-dark text-center">Thông tin tài khoản</h2>
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="checkout__order" style="border: 1px solid lightgray">
+              <h4>Họ tên: {{customer$.value.name}}</h4>
+              <div class="checkout__order__products">Thông tin: <span>...</span></div>
+              <ul>
+                <li>Ngày sinh: <span>{{customer$.value.dayOfBirth  | date: "dd/MM/yyyy"}}</span></li>
+
+                <li *ngIf="customer$.value.gender === 0">Giới tính: <span>Nam</span></li>
+                <li *ngIf="customer$.value.gender === 1">Giới tính: <span>Nữ</span></li>
+                <li *ngIf="customer$.value.gender === 2">Giới tính: <span>LGBT</span></li>
+
+                <li>CMND/CCCD: <span>{{customer$.value.idCard}}</span></li>
+                <li>Email: <span>{{customer$.value.email}}</span></li>
+                <li>Số điện thoại: <span>{{customer$.value.phoneNumber}}</span></li>
+                <li>Địa chỉ: <span>{{customer$.value.address}}</span></li>
+              </ul>
+              <div class="checkout__order__subtotal">Tài khoản: <span
+                class="text-danger">{{customer$.value.user.username}}</span></div>
+              <div class="checkout__order__total">Mật Khẩu: <span>**********</span></div>
+<!--              <div class="checkout__order__products">Trạng thái: <span>...</span></div>-->
+<!--              <div class="checkout__input__checkbox">-->
+<!--                Tâm sự tuổi 30?-->
+<!--              </div>-->
+<!--              <p style="text-align: justify">Vết thương không lành theo cách chúng ta muốn, chúng lành theo cách chúng-->
+<!--                cần. Cần có thời gian để vết-->
+<!--                thương mờ dần thành sẹo. Cần có thời gian để quá trình chữa bệnh diễn ra. Hãy cho bản thân thời gian đó.-->
+<!--                Hãy nhẹ nhàng với vết thương của bạn. Hãy nhẹ nhàng với trái tim của bạn. Bạn xứng đáng được chữa lành. –-->
+<!--                <strong>⚡</strong></p>-->
+            </div>
+
+          </div>
+
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+</div>
+<div class="col-lg-2"></div>
+<h1>.</h1>
+<!--</div>-->
+</body>
+
+
+
+
+

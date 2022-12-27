@@ -1,0 +1,168 @@
+<body>
+<div class="row">
+  <div class="col-lg-1">
+  </div>
+  <div class="col-lg-10">
+    <div class="row mt-3">
+      <div>
+        <h3 class=" fw-bold text-dark mb-4 mt-5"><span style="box-shadow: 0 8px 15px lightblue; padding: 11px">
+QUẢN LÝ TÀI KHOẢN</span></h3>
+      </div>
+      <div class="col-lg-3 col-12 col-md-6 text-center">
+        <div style="box-shadow: 0 8px 15px lightblue">
+          <div class="bg-warning">
+            <img src="{{image}}"
+                 height="200"
+                 width="200" class="m-3">
+          </div>
+          <h3 style="color: black">{{customerName}}</h3>
+          <a>
+            <button (click)="whenLogout()" style="height: auto;width: auto" type="button" class="btn btn-danger">
+              Đăng xuất
+            </button>
+          </a>
+
+          <hr>
+          <a routerLink="/customer">
+            <span class="text-dark">Thông tin tài khoản</span>
+          </a>
+          <hr>
+          <a routerLink="/history">
+            <span class="text-dark">Lịch sử </span>
+          </a>
+          <hr>
+
+        </div>
+      </div>
+
+      <div class="col-lg-9 col-12 c0l-md-6 table-responsive">
+
+        <h2 class="text-dark text-center">Lịch sử</h2>
+        <div class="row">
+          <div class="col-lg-8"></div>
+          <div class="col-lg-4">
+
+          </div>
+        </div>
+
+        <table class="table table-striped table-hover " id="table-id">
+          <thead>
+          <tr class="bg-warning">
+            <th scope="col">STT</th>
+            <th scope="col">Tên phim</th>
+            <th scope="col">Ngày đặt</th>
+            <th scope="col">Số lương</th>
+            <th scope="col">Tổng tiền(VNĐ)</th>
+            <th scope="col">Trạng thái</th>
+            <th scope="col">Hoạt động</th>
+          </tr>
+          </thead>
+          <p class=" text-danger" *ngIf="!action">Không có dữ liệu</p>
+          <tbody class="table-light" *ngIf="action">
+          <tr *ngFor="let history of (historyDto$ | async)!; index as i">
+
+            <td>{{i + 1 + (page - 1) * pageSize  }}</td>
+            <td>{{history.name}}</td>
+            <td>{{history.dayBooking | date:"dd/MM/yyyy HH:mm"}}</td>
+            <td>{{history.quantity }}</td>
+            <td>{{history.price | number }}</td>
+            <td *ngIf="history.status == '1' && history.isDelete == '0'" style="color: blue">Đang giao hàng</td>
+            <td *ngIf="history.status == '2' && history.isDelete == '0'" style="color: green">Thành công</td>
+            <td *ngIf="history.status == '1' && history.isDelete == '2'" style="color: red">Đã hủy</td>
+            <td *ngIf="history.status =='1' && history.isDelete == '0'">
+              <button (click)="deleteHistory(history.id)" style="height: auto;width: auto" type="button"
+                      class="btn btn-danger">
+                <span id="boot-icon" class="bi bi-trash" style="font-size:1rem"></span>
+              </button>
+            </td>
+            <td *ngIf="history.status =='2' || history.isDelete =='2'">
+              <button style="height: auto;width: auto" type="button" class="btn btn-primary" data-bs-toggle="modal"
+                      data-bs-target="#exampleModal"
+                      (click)="showDetail(history.name, history.dayBooking,history.status,history.price,history.quantity
+                ,history.isDelete)">
+                <span id="boot-icon2" class="bi bi-info-circle" style="font-size:1rem"></span>
+              </button>
+            </td>
+          </tr>
+
+          </tbody>
+        </table>
+        <div class="row">
+          <div class="col-lg-6">
+            <div *ngIf="action">
+              <span class="fw-bold text-light"> </span>
+              <select class="form-control-sm" style="width: auto" [(ngModel)]="pageSize"
+                      (ngModelChange)="getAllHistory()">
+                <option [ngValue]="5">Hiển thị 5 trên dòng</option>
+                <option [ngValue]="10">Hiển thị 10 trên dòng</option>
+                <option [ngValue]="15">Hiển thị 15 trên dòng</option>
+                <option [ngValue]="20">Hiển thị 20 trên dòng</option>
+                <option [ngValue]="10000">Hiển thị tất cả</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="d-flex justify-content-between  text-white" *ngIf="action">
+              <ngb-pagination
+                [collectionSize]="(total$ | async)!"
+                [(page)]="page"
+                [maxSize]="pageSize"
+                [pageSize]="pageSize"
+                (pageChange)="getAllHistory()">
+                <ng-template ngbPaginationNumber let-page>{{ page }}</ng-template>
+              </ngb-pagination>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="col-lg-1"></div>
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Thông tin</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <br>
+
+        <div class="d-flex">
+          <label>Name: </label>
+          <span class="mx-1" style="text-align:right"> {{nameModal}}</span>
+        </div>
+        <div class="d-flex">
+          <label>Ngày đặt hàng: </label>
+          <span class="mx-1" style="text-align:end"> {{dayBookingModal}}</span>
+        </div>
+        <div class="d-flex">
+          <label>Trạng thái: </label>
+          <span class="mx-1" *ngIf="statusModal == 1&&isDeleteModal==2">Đã hủy</span>
+          <span class="mx-1" *ngIf="statusModal == 2&&isDeleteModal==0">Thành công</span>
+        </div>
+        <div class="d-flex">
+          <label>Giá: </label>
+          <span class="mx-1"> {{priceModal | number}} VND</span>
+        </div>
+        <div class="d-flex">
+          <label>Số Lượng: </label>
+          <span class="mx-1"> {{quantityModal}}</span>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="mx-2 button btnYellow " data-bs-dismiss="modal">Quay Lại</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<h1>.</h1>
+<!--</div>-->
+</body>
+
+
+
